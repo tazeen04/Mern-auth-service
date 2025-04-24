@@ -1,24 +1,26 @@
 {
-    "name": "auth-service",
-    "version": "1.0.0",
-    "description": "The user managment service",
-    "main": "index.js",
-    "scripts": {
-        "dev": "node src/server.js",
-        "format:fix": "prettier . --write",
-        "format:check": "prettier . --check",
-        "lint:check":"eslint .",
-        "lint:fix":"eslint . --fix",
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "author": "Ameena",
-    "license": "ISC",
-    "devDependencies": {
-        "@eslint/js": "^9.25.1",
-        "@types/node": "^22.14.1",
-        "eslint": "^9.25.1",
-        "prettier": "3.5.3",
-        "typescript": "^5.8.3",
-        "typescript-eslint": "^8.31.0"
-    }
+  "name": "auth-service",
+  "version": "1.0.0",
+  "description": "The user managment service",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node src/server.js",
+    "format:fix": "prettier . --write",
+    "format:check": "prettier . --check",
+    "lint:check": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky"
+  },
+  "author": "Ameena",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^9.25.1",
+    "@types/node": "^22.14.1",
+    "eslint": "^9.25.1",
+    "husky": "^9.1.7",
+    "prettier": "3.5.3",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.31.0"
+  }
 }
