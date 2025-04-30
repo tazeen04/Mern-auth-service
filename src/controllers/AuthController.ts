@@ -3,12 +3,9 @@ import { RegisterUserRequest } from '../types/index';
 import { UserService } from '../services/UserService';
 
 export class AuthController {
-    userService: UserService;
     // dependency injection
     // constructor(private userService: UserService) {}
-    constructor(userService: UserService) {
-        this.userService = userService;
-    }
+    constructor(private userService: UserService) {}
     // method
     async register(req: RegisterUserRequest, res: Response) {
         const { firstName, lastName, email, password } = req.body;
