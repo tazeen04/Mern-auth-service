@@ -2,6 +2,7 @@ import { NextFunction, Response } from 'express';
 import { RegisterUserRequest } from '../types/index';
 import { UserService } from '../services/UserService';
 import { Logger } from 'winston';
+import createHttpError from 'http-errors';
 
 export class AuthController {
     // dependency injection
@@ -17,6 +18,11 @@ export class AuthController {
         next: NextFunction,
     ) {
         const { firstName, lastName, email, password } = req.body;
+        if (!email) {
+            const err = createHttpError(400, 'Email is required');
+            next(err);
+            return;
+        }
         // debug
         this.logger.debug('New request to register auser:', {
             firstName,
