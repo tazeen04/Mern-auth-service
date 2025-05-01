@@ -2,7 +2,7 @@ import { NextFunction, Response } from 'express';
 import { RegisterUserRequest } from '../types/index';
 import { UserService } from '../services/UserService';
 import { Logger } from 'winston';
-import createHttpError from 'http-errors';
+import { validationResult } from 'express-validator';
 
 export class AuthController {
     // dependency injection
@@ -17,12 +17,14 @@ export class AuthController {
         res: Response,
         next: NextFunction,
     ) {
-        const { firstName, lastName, email, password } = req.body;
-        if (!email) {
-            const err = createHttpError(400, 'Email is required');
-            next(err);
+        const result = validationResult(req);
+        if (!result.isEmpty()) {
+            // handle error
+            res.status(400).json({ errors: result.array() });
             return;
         }
+
+        const { firstName, lastName, email, password } = req.body;
         // debug
         this.logger.debug('New request to register auser:', {
             firstName,
