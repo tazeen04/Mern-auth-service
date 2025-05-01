@@ -162,7 +162,6 @@ describe('POST /auth/register', () => {
             // validation error
             it('should return 400 status code if email field is missing ', async () => {
                 // Arrange
-                // Arrange
                 const userData = {
                     firstName: 'Ameena',
                     lastName: 'tazeen',
@@ -182,6 +181,27 @@ describe('POST /auth/register', () => {
                 const users = await userRepository.find();
                 expect(users).toHaveLength(0);
             });
+        });
+    });
+
+    describe('Fields are nor in proper format', () => {
+        it('should trim the email field', async () => {
+            // Arrange
+            const userData = {
+                firstName: 'Ameena',
+                lastName: 'tazeen',
+                email: ' atazeenm@gmail.com ',
+                password: 'secret',
+            };
+
+            // Act
+            await request(app).post('/auth/register').send(userData);
+            // Assert
+            // get data from database
+            const userRepository = connection.getRepository(User);
+            const users = await userRepository.find();
+            const user = users[0];
+            expect(user.email).toBe('atazeenm@gmail.com');
         });
     });
 });
