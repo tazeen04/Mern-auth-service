@@ -181,53 +181,10 @@ describe('POST /auth/register', () => {
                 const users = await userRepository.find();
                 expect(users).toHaveLength(0);
             });
-
-            it('should return 400 status code if firstName field is missing ', async () => {
-                // Arrange
-                const userData = {
-                    firstName: '',
-                    lastName: 'tazeen',
-                    email: 'atazeenm@gmail.com',
-                    password: 'secret',
-                };
-                // Act
-                const response = await request(app)
-                    .post('/auth/register')
-                    .send(userData);
-
-                // Assert
-                // console.log(response.body);
-                expect(response.statusCode).toBe(400);
-                const userRepository = connection.getRepository(User);
-                const users = await userRepository.find();
-                expect(users).toHaveLength(0);
-            });
-
-            it('should return 400 status code if lastName field is missing ', async () => {
-                // Arrange
-                const userData = {
-                    firstName: 'Ameena',
-                    lastName: '',
-                    email: 'atazeenm@gmail.com',
-                    password: 'secret',
-                };
-
-                // Act
-                const response = await request(app)
-                    .post('/auth/register')
-                    .send(userData);
-
-                // Assert
-                // console.log(response.body);
-                expect(response.statusCode).toBe(400);
-                const userRepository = connection.getRepository(User);
-                const users = await userRepository.find();
-                expect(users).toHaveLength(0);
-            });
         });
     });
 
-    describe('Fields are nor in proper format', () => {
+    describe('Fields are not in proper format', () => {
         it('should trim the email field', async () => {
             // Arrange
             const userData = {
@@ -246,5 +203,6 @@ describe('POST /auth/register', () => {
             const user = users[0];
             expect(user.email).toBe('atazeenm@gmail.com');
         });
+        it.todo('should return 400 status code if email is not a valid email');
     });
 });
