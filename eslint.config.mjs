@@ -12,6 +12,7 @@ export default tseslint.config(
             'node_modules',
             'eslint.config.mjs',
             'jest.config.js',
+            'scripts/generateKeys.mjs',
         ],
     },
     {
@@ -24,6 +25,8 @@ export default tseslint.config(
         rules: {
             'no-console': 'off',
             // 'dot-notation': 'error',
+            "no-unused-vars": "off",
+            "@typescript-eslint/no-unused-vars": "off",
             '@typescript-eslint/no-misused-promises': 'off',
         },
     },
