@@ -75,5 +75,38 @@ describe('GET /auth/self', () => {
             // check if user is maches with registred user
             expect((response.body as Record<string, string>).id).toBe(data.id);
         });
+
+        it('should not return the password field', async () => {
+            // user shld be registered
+            const userData = {
+                firstName: 'Ameena',
+                lastName: 'Tazeen',
+                email: 'atazeenm@gmail.com',
+                password: 'secret',
+            };
+            const userRepository = connection.getRepository(User);
+            const data = await userRepository.save({
+                ...userData,
+                role: Roles.CUSTOMER,
+            });
+
+            // Generate token
+            const accessToken = jwks.token({
+                sub: String(data.id),
+                role: data.role,
+            });
+
+            // Add token to cookie
+
+            const response = await request(app)
+                .get('/auth/self')
+                .set('Cookie', [`accessToken=${accessToken};`])
+                .send();
+            // Assert
+            // check if user is maches with registred user
+            expect(response.body as Record<string, string>).not.toHaveProperty(
+                'password',
+            );
+        });
     });
 });
