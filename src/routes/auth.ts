@@ -9,6 +9,8 @@ import loginValidator from '../validators/login-validator';
 import { TokenService } from '../services/TokenService';
 import { RefreshToken } from '../entity/RefreshToken';
 import { CredentialService } from '../services/credentialService';
+import authenticate from '../middleswares/authenticate';
+import { AuthRequest } from '../types';
 
 // these are dependencies
 // for larger file we can use library like inversify
@@ -38,6 +40,9 @@ router.post(
     loginValidator,
     (req: Request, res: Response, next: NextFunction) =>
         authController.login(req, res, next),
+);
+router.get('/self', authenticate, (req: Request, res: Response) =>
+    authController.self(req as AuthRequest, res),
 );
 
 export default router;
