@@ -4,8 +4,15 @@ import express, { NextFunction, Request, Response } from 'express';
 import logger from './config/logger';
 import { HttpError } from 'http-errors';
 import authRouter from './routes/auth';
+import path from 'path';
 
 const app = express();
+// app.use(express.static("public"))
+ 
+app.use(
+    '/.well-known',
+    express.static(path.join(__dirname, '../public/.well-known')),
+);
 app.use(cookieParser());
 app.use(express.json());
 
@@ -23,7 +30,7 @@ app.use('/auth', authRouter);
 
 app.use((err: HttpError, req: Request, res: Response, next: NextFunction) => {
     logger.error(err.message);
-    const statusCode = err.statusCode || 500;
+    const statusCode = err.statusCode || err.status || 500;
 
     res.status(statusCode).json({
         errors: [
