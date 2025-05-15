@@ -1,4 +1,3 @@
- 
 import { expressjwt, GetVerificationKey } from 'express-jwt';
 import jwksClient from 'jwks-rsa';
 import { Config } from '../config';
