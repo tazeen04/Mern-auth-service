@@ -8,7 +8,7 @@ import path from 'path';
 
 const app = express();
 // app.use(express.static("public"))
- 
+
 app.use(
     '/.well-known',
     express.static(path.join(__dirname, '../public/.well-known')),
