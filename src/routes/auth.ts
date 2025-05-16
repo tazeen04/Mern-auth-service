@@ -11,6 +11,7 @@ import { RefreshToken } from '../entity/RefreshToken';
 import { CredentialService } from '../services/credentialService';
 import authenticate from '../middleswares/authenticate';
 import { AuthRequest } from '../types';
+import validateRefreshToken from '../middleswares/validateRefreshToken';
 
 // these are dependencies
 // for larger file we can use library like inversify
@@ -43,6 +44,13 @@ router.post(
 );
 router.get('/self', authenticate, (req: Request, res: Response) =>
     authController.self(req as AuthRequest, res),
+);
+
+router.post(
+    '/refresh',
+    validateRefreshToken,
+    (req: Request, res: Response, next: NextFunction) =>
+        authController.refresh(req as AuthRequest, res, next),
 );
 
 export default router;
