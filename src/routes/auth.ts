@@ -12,6 +12,7 @@ import { CredentialService } from '../services/credentialService';
 import authenticate from '../middleswares/authenticate';
 import { AuthRequest } from '../types';
 import validateRefreshToken from '../middleswares/validateRefreshToken';
+import parseRefreshToken from '../middleswares/parseRefreshToken';
 
 // these are dependencies
 // for larger file we can use library like inversify
@@ -51,6 +52,14 @@ router.post(
     validateRefreshToken,
     (req: Request, res: Response, next: NextFunction) =>
         authController.refresh(req as AuthRequest, res, next),
+);
+
+router.post(
+    '/logout',
+    authenticate,
+    parseRefreshToken,
+    (req: Request, res: Response, next: NextFunction) =>
+        authController.logout(req as AuthRequest, res, next),
 );
 
 export default router;
