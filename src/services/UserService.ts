@@ -8,7 +8,14 @@ export class UserService {
     // constructor(private userRepository: Repository<User>) {}
     constructor(private userRepository: Repository<User>) {}
 
-    async create({ firstName, lastName, email, password, role }: UserData) {
+    async create({
+        firstName,
+        lastName,
+        email,
+        password,
+        role,
+        tenantId,
+    }: UserData) {
         const user = await this.userRepository.findOne({
             where: { email: email },
         });
@@ -24,20 +31,20 @@ export class UserService {
 
         // store data using USER REPO
         try {
-            return await this.userRepository.save({
+            const newUser = this.userRepository.create({
                 firstName,
                 lastName,
                 email,
                 password: hashedPassword,
                 role,
+                tenant: tenantId ? { id: Number(tenantId) } : undefined,
             });
+            return await this.userRepository.save(newUser); // returns a single user
         } catch {
-            // handle error
-            const error = createHttpError(
+            throw createHttpError(
                 500,
                 'Failed to store the data in the database',
             );
-            throw error;
         }
     }
 
