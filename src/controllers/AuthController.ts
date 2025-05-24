@@ -108,7 +108,7 @@ export class AuthController {
         // add token to cookies
         // return the response
         try {
-            const user = await this.userService.findbyEmail(email);
+            const user = await this.userService.findbyEmailWithPassword(email);
             if (!user) {
                 const error = createHttpError(
                     400,
