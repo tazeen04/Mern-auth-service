@@ -3,7 +3,10 @@ module.exports = {
     testEnvironment: 'node',
     present: 'ts-jest',
     verbose: true,
-    transform: {
+    collectCoverage: true,
+    coverageProvider: 'v8',
+    collectCoverageFrom: ['src/**/*.ts', '!tests/**', '!**/node_modules/**'],
+      transform: {
         '^.+\.tsx?$': ['ts-jest', {}],
     },
 };
