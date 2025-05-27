@@ -74,6 +74,7 @@ web_modules/
 
 certs/
 public/
+coverage/
 
 # dotenv environment variable files
 .env
